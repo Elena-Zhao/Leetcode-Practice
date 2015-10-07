@@ -1,0 +1,29 @@
+# 1. lambda functions in list and using zip() to create dict
+
+# Next we'll create a list of names that will be used as dictionary keys.
+fields = ["ranking", "title", "band_singer", "url"]
+
+# We now use the lambda function to process each "td" element on a given row.
+# the [... for ... in ...] construct is a list comprehension. They look weird at
+# first but are amazingly useful and worth spending some time to learn.
+# At a high level, thing of it as a one line "for loop" that aggregates the result
+# of each iteration into a list. So once this line finished running, we will have a list
+# of something.
+#
+# The dict function is another way to create a dictionary. One neat thing about it
+# is that it accepts a list of key/value pairs that will be used to create said dictionary.
+#
+# But where are these key/value pairs coming from in here? From the zip function!
+# The zip function will take multiple iterables (things that can be treated as a sequence)
+# and combine them. An example might make it clearer:
+#
+# zip(["a", "b", "c"], [1, 2, 3]) evaluates to [("a", 1), ("b", 2), ("c", 3)]. It's like a zipper!!!
+#
+# Anyway, never mind the parenthesis around the pairs; they just show that the elements
+# are grouped into tuples, which you can think of as lists that are immutable (they can't grow or shrink).
+#
+# So to recap: the zip function creates a list of pairs; which the dict function then uses
+# to create a dictionary, using the first element of the pair as the key and the second as
+# the value; and finally, the list comprehension iterates over each row element, and puts
+# the result of each iteration on a list, which is then bound to the songs variable.
+songs = [dict(zip(fields, cleaner(row.find_all("td")))) for row in rows]
